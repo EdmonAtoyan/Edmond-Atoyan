@@ -1,19 +1,21 @@
 name: generate animation
 
 on:
-  # run automatically every 12 hours
   schedule: [{cron: "0 */12 * * *"}]
-
-  # allows to manually run the job at any time
+  push:
+    branches:
+      - main
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   generate:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    
+
     steps:
-      # Generates a snake game from the repository owner's contribution graph.
       - name: generate github-contribution-grid-snake.svg
         uses: Platane/snk@v3
         with:
@@ -22,8 +24,7 @@ jobs:
             dist/github-contribution-grid-snake.svg
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark
             dist/github-contribution-grid-snake-light.svg?palette=github-light
-      # push the content of <build_dir> to a branch
-      # The content will be available from the repository's output branch on raw.githubusercontent.com.
+
       - name: push github-contribution-grid-snake.svg to the output branch
         uses: crazy-max/ghaction-github-pages@v2.6.0
         with:

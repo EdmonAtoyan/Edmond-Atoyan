@@ -1,21 +1,28 @@
 # Visit https://github.com/lowlighter/metrics/blob/master/action.yml for full reference
 name: Metrics
+
 on:
-  # Schedule updates
   schedule: [{cron: "0 */12 * * *"}]
-  push: {branches: "main"}
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
 jobs:
   github-metrics:
     runs-on: ubuntu-latest
+
     steps:
       - uses: lowlighter/metrics@latest
         with:
-          # You'll need to setup a personal token in your secrets.
-          token: ${{ secrets.SNAKE_SECRET }}
-          # GITHUB_TOKEN is a special auto-generated token used for commits
+          # Create a personal access token and save it as the METRICS repository secret.
+          token: ${{ secrets.METRICS }}
+          # GitHub provides this token automatically for workflow commits.
           committer_token: ${{ secrets.GITHUB_TOKEN }}
 
-          # Options
           user: EdmonAtoyan
           template: classic
           base: header, activity, metadata, repositories, community
