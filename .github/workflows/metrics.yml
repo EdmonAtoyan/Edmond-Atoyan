@@ -19,7 +19,7 @@ jobs:
       - uses: lowlighter/metrics@latest
         with:
           # Create a personal access token and save it as the METRICS repository secret.
-          token: ${{ secrets.METRICS }}
+          token: ${{ secrets.METRICS_TOKEN }}
           # GitHub provides this token automatically for workflow commits.
           committer_token: ${{ secrets.GITHUB_TOKEN }}
 
